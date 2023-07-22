@@ -20,13 +20,25 @@ export function SceneManager(canvas: HTMLCanvasElement) {
 
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
-
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
   });
 
   renderer.setSize(screenSizes.width, screenSizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  window.addEventListener("resize", handleScreenResize);
+
+  function handleScreenResize() {
+    screenSizes.width = window.innerWidth;
+    screenSizes.height = window.innerHeight;
+
+    camera.aspect = screenSizes.width / screenSizes.height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(screenSizes.width, screenSizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  }
 
   function animate() {
     requestAnimationFrame(animate);
