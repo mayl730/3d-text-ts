@@ -31,7 +31,18 @@ export function SceneManager(canvas: HTMLCanvasElement) {
   renderer.setSize(screenSizes.width, screenSizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+  const cursor = {
+    x: 0,
+    y: 0,
+  };
+
   window.addEventListener("resize", handleScreenResize);
+  window.addEventListener("mousemove", handleMouseMove);
+
+  function handleMouseMove(event: MouseEvent) {
+    cursor.x = event.clientX / screenSizes.width - 1;
+    cursor.y = event.clientY / screenSizes.height - 1;
+  }
 
   function handleScreenResize() {
     screenSizes.width = window.innerWidth;
@@ -45,6 +56,9 @@ export function SceneManager(canvas: HTMLCanvasElement) {
   }
 
   function animate() {
+    camera.position.x = cursor.x;
+    camera.position.y = cursor.y;
+
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
