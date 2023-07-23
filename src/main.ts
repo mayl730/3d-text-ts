@@ -36,3 +36,22 @@ fontLoader.load("/fonts/montserrat_bold.json", (font) => {
   text2.position.set(0, -0.3, 0);
   scene.add(text1, text2);
 });
+
+class HelixCurve extends THREE.Curve<THREE.Vector3> {
+  static create(): HelixCurve {
+    return new HelixCurve();
+  }
+
+  getPoint(t: number) {
+    const s = (t - 0.5) * 8 * Math.PI;
+    return new THREE.Vector3(5 * Math.cos(s), s, 5 * Math.sin(s));
+  }
+}
+
+const helix = HelixCurve.create();
+const tubeGeometry = new THREE.TubeGeometry(helix, 128, 1, 32);
+const tubeObject = new THREE.Mesh(tubeGeometry, material);
+const scale = 0.05;
+tubeObject.scale.set(scale, scale, scale);
+
+scene.add(tubeObject);
