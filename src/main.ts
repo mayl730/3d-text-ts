@@ -8,7 +8,7 @@ const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 const sceneManager = SceneManager(canvas);
 const scene = sceneManager.getScene();
 
-const material = new THREE.MeshNormalMaterial()
+const material = new THREE.MeshNormalMaterial();
 
 const fontLoader = new FontLoader();
 
@@ -48,19 +48,39 @@ class HelixCurve extends THREE.Curve<THREE.Vector3> {
   }
 }
 
+function addObjectToScene(
+  geometry: THREE.BufferGeometry,
+  material: THREE.Material,
+  number: number,
+  scaleRange: number
+) {
+  for (let i = 0; i < number; i++) {
+    const object = new THREE.Mesh(geometry, material);
+
+    let randomNumZ = (Math.random() - 0.5) * 10;
+
+    while (randomNumZ < 0.3 && randomNumZ > -0.2) {
+      randomNumZ = (Math.random() - 0.5) * 10;
+    }
+    object.position.x = (Math.random() - 0.5) * 10;
+    object.position.y = (Math.random() - 0.5) * 10;
+    object.position.z = randomNumZ;
+    object.rotation.x = Math.random() * Math.PI;
+    object.rotation.y = Math.random() * Math.PI;
+
+    const scale = Math.random() * scaleRange;
+
+    object.scale.set(scale, scale, scale);
+
+    scene.add(object);
+  }
+}
+
 const helix = HelixCurve.create();
-
-const tubeGeometry = new THREE.TubeGeometry(helix, 128, 1, 32);
-
 const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+const tubeGeometry = new THREE.TubeGeometry(helix, 128, 1, 32);
 const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 16);
 
-const tubeObject = new THREE.Mesh(tubeGeometry, material);
-const scale = 0.05;
-tubeObject.scale.set(scale, scale, scale);
-
-
-const donutObject = new THREE.Mesh(donutGeometry, material);
-const sphereObject = new THREE.Mesh(sphereGeometry, material);
-
-scene.add(sphereObject);
+addObjectToScene(donutGeometry, material, 70, 1);
+addObjectToScene(tubeGeometry, material, 20, 0.05);
+addObjectToScene(sphereGeometry, material, 10, 0.7);
