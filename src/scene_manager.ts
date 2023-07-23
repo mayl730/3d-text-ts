@@ -4,6 +4,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 export function SceneManager(canvas: HTMLCanvasElement) {
   const scene = new THREE.Scene();
 
+  // TODO: remove for the production
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
+
   const screenSizes = {
     width: window.innerWidth,
     height: window.innerHeight,
