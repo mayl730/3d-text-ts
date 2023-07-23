@@ -49,9 +49,18 @@ class HelixCurve extends THREE.Curve<THREE.Vector3> {
 }
 
 const helix = HelixCurve.create();
+
 const tubeGeometry = new THREE.TubeGeometry(helix, 128, 1, 32);
+
+const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 16);
+
 const tubeObject = new THREE.Mesh(tubeGeometry, material);
 const scale = 0.05;
 tubeObject.scale.set(scale, scale, scale);
 
-scene.add(tubeObject);
+
+const donutObject = new THREE.Mesh(donutGeometry, material);
+const sphereObject = new THREE.Mesh(sphereGeometry, material);
+
+scene.add(sphereObject);
