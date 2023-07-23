@@ -8,7 +8,9 @@ const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 const sceneManager = SceneManager(canvas);
 const scene = sceneManager.getScene();
 
-const material = new THREE.MeshNormalMaterial();
+const textureLoader = new THREE.TextureLoader();
+const matcapTexture = textureLoader.load("matcaps/031.png");
+const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
 const fontLoader = new FontLoader();
 
