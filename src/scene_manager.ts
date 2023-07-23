@@ -32,8 +32,8 @@ export function SceneManager(canvas: HTMLCanvasElement) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const cursor = {
-    x: 0,
-    y: 0,
+    x: -0.5,
+    y: -0.5,
   };
 
   window.addEventListener("resize", handleScreenResize);
